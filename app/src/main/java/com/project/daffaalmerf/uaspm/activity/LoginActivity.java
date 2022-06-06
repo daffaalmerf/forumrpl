@@ -1,4 +1,4 @@
-package com.project.daffaalmerf.uaspm;
+package com.project.daffaalmerf.uaspm.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,8 +13,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.project.daffaalmerf.uaspm.databinding.ActivityHomeBinding;
+import com.project.daffaalmerf.uaspm.R;
 import com.project.daffaalmerf.uaspm.databinding.ActivityLoginBinding;
 
 public class LoginActivity extends AppCompatActivity {

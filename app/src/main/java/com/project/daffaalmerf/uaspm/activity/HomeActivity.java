@@ -1,4 +1,4 @@
-package com.project.daffaalmerf.uaspm;
+package com.project.daffaalmerf.uaspm.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -10,8 +10,8 @@ import android.os.Bundle;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.project.daffaalmerf.uaspm.R;
 import com.project.daffaalmerf.uaspm.databinding.ActivityHomeBinding;
-import com.project.daffaalmerf.uaspm.databinding.ActivityRegisterBinding;
 
 public class HomeActivity extends AppCompatActivity {
 

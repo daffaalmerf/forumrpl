@@ -1,6 +1,7 @@
 package com.project.daffaalmerf.uaspm.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,24 +12,24 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.firestore.FirestoreRecyclerAdapter;
 import com.firebase.ui.firestore.FirestoreRecyclerOptions;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.project.daffaalmerf.uaspm.R;
-import com.project.daffaalmerf.uaspm.spacePostModel;
+import com.project.daffaalmerf.uaspm.activity.ViewSpacePostActivity;
+import com.project.daffaalmerf.uaspm.model.SpacePostModel;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-public class SpacePostAdapter extends FirestoreRecyclerAdapter<spacePostModel, SpacePostAdapter.spacePostHolder>{
+public class SpacePostAdapter extends FirestoreRecyclerAdapter<SpacePostModel, SpacePostAdapter.spacePostHolder>{
 
     private Context context;
 
-    public SpacePostAdapter(@NonNull FirestoreRecyclerOptions<spacePostModel> option, Context context){
+    public SpacePostAdapter(@NonNull FirestoreRecyclerOptions<SpacePostModel> option, Context context){
 
         super(option);
         this.context = context;
@@ -36,7 +37,9 @@ public class SpacePostAdapter extends FirestoreRecyclerAdapter<spacePostModel, S
     }
 
     @Override
-    protected void onBindViewHolder(@NonNull SpacePostAdapter.spacePostHolder holder, int position, @NonNull spacePostModel model) {
+    protected void onBindViewHolder(@NonNull SpacePostAdapter.spacePostHolder holder, int position, @NonNull SpacePostModel model) {
+
+        String postId = getSnapshots().getSnapshot(position).getId();
 
         DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
         String creationDate = dateFormat.format(model.getTimestamp());
@@ -65,6 +68,66 @@ public class SpacePostAdapter extends FirestoreRecyclerAdapter<spacePostModel, S
         holder.postCategory.setText(category);
         holder.postContent.setText(content);
         holder.postDate.setText(creationDate);
+
+        holder.postUsername.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent viewPostIntent = new Intent(context, ViewSpacePostActivity.class);
+                viewPostIntent.putExtra("uid", uid);
+                viewPostIntent.putExtra("post_id", postId);
+                viewPostIntent.putExtra("category", category);
+                viewPostIntent.putExtra("content", content);
+                viewPostIntent.putExtra("date", creationDate);
+                context.startActivity(viewPostIntent);
+
+            }
+        });
+
+        holder.postCategory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent viewPostIntent = new Intent(context, ViewSpacePostActivity.class);
+                viewPostIntent.putExtra("uid", uid);
+                viewPostIntent.putExtra("post_id", postId);
+                viewPostIntent.putExtra("category", category);
+                viewPostIntent.putExtra("content", content);
+                viewPostIntent.putExtra("date", creationDate);
+                context.startActivity(viewPostIntent);
+
+            }
+        });
+
+        holder.postContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent viewPostIntent = new Intent(context, ViewSpacePostActivity.class);
+                viewPostIntent.putExtra("uid", uid);
+                viewPostIntent.putExtra("post_id", postId);
+                viewPostIntent.putExtra("category", category);
+                viewPostIntent.putExtra("content", content);
+                viewPostIntent.putExtra("date", creationDate);
+                context.startActivity(viewPostIntent);
+
+            }
+        });
+
+        holder.postDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent viewPostIntent = new Intent(context, ViewSpacePostActivity.class);
+                viewPostIntent.putExtra("uid", uid);
+                viewPostIntent.putExtra("post_id", postId);
+                viewPostIntent.putExtra("category", category);
+                viewPostIntent.putExtra("content", content);
+                viewPostIntent.putExtra("date", creationDate);
+                context.startActivity(viewPostIntent);
+
+            }
+        });
 
     }
 

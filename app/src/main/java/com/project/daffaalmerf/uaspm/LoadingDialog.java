@@ -9,11 +9,11 @@ public class LoadingDialog {
     private Activity activity;
     private AlertDialog alertDialog;
 
-    LoadingDialog(Activity mActivity){
+    public LoadingDialog(Activity mActivity){
         activity = mActivity;
     }
 
-    void startDialog(){
+    public void startDialog(){
 
         AlertDialog.Builder builder = new AlertDialog.Builder(activity);
 
@@ -26,7 +26,7 @@ public class LoadingDialog {
 
     }
 
-    void dismissDialog(){
+    public void dismissDialog(){
 
         alertDialog.dismiss();
 

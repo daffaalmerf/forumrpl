@@ -7,19 +7,19 @@
 
     <fragment
         android:id="@+id/home_classroom"
-        android:name="com.project.daffaalmerf.uaspm.ClassroomFragment"
+        android:name="com.project.daffaalmerf.uaspm.fragment.ClassroomFragment"
         android:label="fragment_classroom"
         tools:layout="@layout/fragment_classroom" />
 
     <fragment
         android:id="@+id/home_space"
-        android:name="com.project.daffaalmerf.uaspm.SpaceFragment"
+        android:name="com.project.daffaalmerf.uaspm.fragment.SpaceFragment"
         android:label="fragment_space"
         tools:layout="@layout/fragment_space" />
 
     <fragment
         android:id="@+id/home_profile"
-        android:name="com.project.daffaalmerf.uaspm.ProfileFragment"
+        android:name="com.project.daffaalmerf.uaspm.fragment.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
 

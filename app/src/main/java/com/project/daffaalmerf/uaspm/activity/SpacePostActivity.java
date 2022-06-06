@@ -1,4 +1,4 @@
-package com.project.daffaalmerf.uaspm;
+package com.project.daffaalmerf.uaspm.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,7 +22,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.project.daffaalmerf.uaspm.databinding.ActivityLoginBinding;
+import com.project.daffaalmerf.uaspm.LoadingDialog;
+import com.project.daffaalmerf.uaspm.R;
 import com.project.daffaalmerf.uaspm.databinding.ActivitySpacePostBinding;
 
 import java.util.HashMap;

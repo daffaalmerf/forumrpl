@@ -1,10 +1,10 @@
-package com.project.daffaalmerf.uaspm;
+package com.project.daffaalmerf.uaspm.model;
 
 import java.util.Date;
 
-public class spacePostModel {
+public class SpacePostModel {
 
-    public spacePostModel(){
+    public SpacePostModel(){
 
     }
 
@@ -13,7 +13,7 @@ public class spacePostModel {
     private String category;
     private String content;
 
-    public spacePostModel(String by, Date timestamp, String category, String content){
+    public SpacePostModel(String by, Date timestamp, String category, String content){
 
         this.by = by;
         this.timestamp = timestamp;
