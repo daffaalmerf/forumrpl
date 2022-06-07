@@ -10,12 +10,14 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.project.daffaalmerf.uaspm.LoadingDialog;
 import com.project.daffaalmerf.uaspm.R;
 import com.project.daffaalmerf.uaspm.databinding.ActivityRegisterBinding;
 
@@ -41,15 +43,20 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                final String regexName = "^[a-zA-z ]+$";
+
+                final String regexEmail = "^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+↵\n" +
+                        ")*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$";
+
                 final String reg_name = binding.regInputName.getText().toString();
                 final String reg_email = binding.regInputEmail.getText().toString();
                 final String reg_password = binding.regInputPassword.getText().toString();
                 final String reg_confirm = binding.regInputConfirmPassword.getText().toString();
 
-                if (TextUtils.isEmpty(reg_name)) {
+                if (TextUtils.isEmpty(reg_name) || !(reg_name).matches(regexName)) {
                     binding.regInputName.setError("Invalid name");
                 }
-                if (TextUtils.isEmpty(reg_email)) {
+                if (TextUtils.isEmpty(reg_email) || !(reg_email.matches(regexEmail))) {
                     binding.regInputEmail.setError("Invalid e-mail");
                 }
                 if (TextUtils.isEmpty(reg_password)) {
@@ -58,8 +65,14 @@ public class RegisterActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(reg_confirm) || !reg_confirm.equals(reg_password)){
                     binding.regInputConfirmPassword.setError("Invalid password confirmation");
                 }
-                if (!TextUtils.isEmpty(reg_name) && !TextUtils.isEmpty(reg_email) && !TextUtils.isEmpty(reg_password) &&
+                if (!TextUtils.isEmpty(reg_name) && reg_name.matches(regexName) && !TextUtils.isEmpty(reg_email) &&
+                        reg_email.matches(regexEmail) && !TextUtils.isEmpty(reg_password) &&
                         !TextUtils.isEmpty(reg_confirm) && reg_password.equals(reg_confirm)) {
+
+                    LoadingDialog loadingDialog = new LoadingDialog(RegisterActivity.this);
+
+                    loadingDialog.startDialog();
+
                     mAuth.createUserWithEmailAndPassword(reg_email, reg_password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
@@ -83,13 +96,30 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         if (task.isSuccessful()) {
 
-                                            Intent homeIntent = new Intent(RegisterActivity.this, HomeActivity.class);
-                                            startActivity(homeIntent);
-                                            finish();
+                                            loadingDialog.dismissDialog();
 
-                                        } else {
+                                            mAuth.getCurrentUser().sendEmailVerification().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                                @Override
+                                                public void onComplete(@NonNull Task<Void> task) {
 
-                                            Toast.makeText(getApplicationContext(), "Failed to register", Toast.LENGTH_SHORT).show();
+                                                    if(task.isSuccessful()){
+
+                                                        Intent homeIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                        startActivity(homeIntent);
+                                                        finish();
+
+                                                        Toast.makeText(getApplicationContext(), "Account Successfully Register", Toast.LENGTH_SHORT).show();
+
+                                                    } else {
+
+                                                        loadingDialog.dismissDialog();
+
+                                                        Toast.makeText(getApplicationContext(), "Failed to Register", Toast.LENGTH_SHORT).show();
+
+                                                    }
+
+                                                }
+                                            });
 
                                         }
                                     }
@@ -105,6 +135,17 @@ public class RegisterActivity extends AppCompatActivity {
                         }
                     });
                 }
+
+            }
+        });
+
+        binding.regLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent returnLoginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                startActivity(returnLoginIntent);
+                finish();
 
             }
         });
