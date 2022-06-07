@@ -13,6 +13,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UASPM">
         <activity
+            android:name=".activity.HomeActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.ForgetPasswordActivity"
             android:exported="false" />
         <activity
@@ -35,7 +38,7 @@
             android:name=".activity.RegisterActivity"
             android:exported="false" />
         <activity
-            android:name=".activity.HomeActivity"
+            android:name=".activity.SplashActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">UASPM</string>
+    <string name="app_name">Forum RPL</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string-array name="categoryList">
         <item>Question</item>

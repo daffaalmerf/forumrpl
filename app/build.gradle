@@ -41,8 +41,6 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     // circle image view
     implementation 'de.hdodenhof:circleimageview:3.1.0'
-    // image cropper
-    implementation 'com.github.yalantis:ucrop:2.2.6'
     // recyclerview
     implementation "androidx.recyclerview:recyclerview:1.2.1"
     // navigation host fragment

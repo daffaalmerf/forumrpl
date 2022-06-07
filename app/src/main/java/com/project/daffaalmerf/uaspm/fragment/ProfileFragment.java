@@ -59,8 +59,6 @@ public class ProfileFragment extends Fragment {
     private FirebaseDatabase mDatabase;
     private FirebaseFirestore mFirestore;
     private SpacePostAdapter spacePostAdapter;
-//    private ActivityResultLauncher<Intent> mGetContent;
-//    private ActivityResultContracts<List<Uri>,Uri>();
 
     public ProfileFragment() {
 
@@ -138,64 +136,12 @@ public class ProfileFragment extends Fragment {
                     }
                 });
 
-//                mGetContent = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
-//                    @Override
-//                    public void onActivityResult(ActivityResult result) {
-//
-//                        if (result.getResultCode() == Activity.RESULT_OK) {
-//                            Intent data = result.getData();
-//
-//                            if (data != null && data.getData() != null) {
-//                                Uri selectedImageUri = data.getData();
-//                                Bitmap selectedImageBitmap;
-//                                try {
-//                                    selectedImageBitmap
-//                                            = MediaStore.Images.Media.getBitmap(
-//                                            this.getContentResolver(),
-//                                            selectedImageUri);
-//                                } catch (IOException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                imageView.setImageBitmap(
-//                                        selectedImageBitmap);
-//                            }
-//                        }
-//                    }
-//                });
             }
         });
 
 
         return profileView;
     }
-
-//    private void imageCropper(){
-//        Intent getImageIntent = new Intent();
-//        getImageIntent.setType("image/*");
-//        getImageIntent.setAction(Intent.ACTION_GET_CONTENT);
-//        mGetContent.launch(getImageIntent);
-//    }
-
-//    private void cropImage(Uri sourceUri) {
-//        Uri destinationUri = Uri.fromFile(new File(getCacheDir(), queryName(getContentResolver(), sourceUri)));
-//        UCrop.Options options = new UCrop.Options();
-//        options.setCompressionQuality(IMAGE_COMPRESSION);
-//
-//        // applying UI theme
-//        options.setToolbarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-//        options.setStatusBarColor(ContextCompat.getColor(this, R.color.colorPrimary));
-//        options.setActiveWidgetColor(ContextCompat.getColor(this, R.color.colorPrimary));
-//
-//        if (lockAspectRatio)
-//            options.withAspectRatio(ASPECT_RATIO_X, ASPECT_RATIO_Y);
-//
-//        if (setBitmapMaxWidthHeight)
-//            options.withMaxResultSize(bitmapMaxWidth, bitmapMaxHeight);
-//
-//        UCrop.of(sourceUri, destinationUri)
-//                .withOptions(options)
-//                .start(this);
-//    }
 
     @Override
     public void onStart() {
