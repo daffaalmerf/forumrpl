@@ -13,9 +13,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.UASPM">
         <activity
+            android:name=".activity.EditSpacePostActivity"
+            android:exported="false" />
+        <activity
             android:name="com.yalantis.ucrop.UCropActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"/>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
             android:name=".activity.ViewSpacePostActivity"
             android:exported="false" />
