@@ -106,6 +106,7 @@ public class ViewSpacePostActivity extends AppCompatActivity {
                     reply.put("by", current_uid);
                     reply.put("timestamp", FieldValue.serverTimestamp());
                     reply.put("reply", replyText);
+                    reply.put("post_id", postId);
                     mFirestore.collection("Space").document(postId).collection("Replies").document().set(reply).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {

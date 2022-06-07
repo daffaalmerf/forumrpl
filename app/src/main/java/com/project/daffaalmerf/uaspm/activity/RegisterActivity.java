@@ -104,8 +104,8 @@ public class RegisterActivity extends AppCompatActivity {
 
                                                     if(task.isSuccessful()){
 
-                                                        Intent homeIntent = new Intent(RegisterActivity.this, LoginActivity.class);
-                                                        startActivity(homeIntent);
+                                                        Intent loginIntent = new Intent(RegisterActivity.this, LoginActivity.class);
+                                                        startActivity(loginIntent);
                                                         finish();
 
                                                         Toast.makeText(getApplicationContext(), "Account Successfully Register", Toast.LENGTH_SHORT).show();
