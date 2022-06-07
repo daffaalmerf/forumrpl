@@ -2,14 +2,18 @@ package com.project.daffaalmerf.uaspm.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
+import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -18,17 +22,29 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.project.daffaalmerf.uaspm.LoadingDialog;
 import com.project.daffaalmerf.uaspm.R;
+import com.project.daffaalmerf.uaspm.WrapContentLinearLayoutManager;
+import com.project.daffaalmerf.uaspm.adapter.ReplyAdapter;
+import com.project.daffaalmerf.uaspm.adapter.SpacePostAdapter;
 import com.project.daffaalmerf.uaspm.databinding.ActivitySpacePostBinding;
 import com.project.daffaalmerf.uaspm.databinding.ActivityViewSpacePostBinding;
+import com.project.daffaalmerf.uaspm.model.ReplyModel;
+import com.project.daffaalmerf.uaspm.model.SpacePostModel;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class ViewSpacePostActivity extends AppCompatActivity {
 
     private ActivityViewSpacePostBinding binding;
     private FirebaseAuth mAuth;
     private FirebaseDatabase mDatabase;
+    private FirebaseFirestore mFirestore;
+    private ReplyAdapter replyAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +60,7 @@ public class ViewSpacePostActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         mDatabase = FirebaseDatabase.getInstance();
+        mFirestore = FirebaseFirestore.getInstance();
 
         DatabaseReference mUserDatabase = mDatabase.getReference().child("Users").child(uid);
 
@@ -69,6 +86,54 @@ public class ViewSpacePostActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         String current_uid = mAuth.getCurrentUser().getUid();
+
+        Query query = mFirestore.collection("Space").document(postId).collection("Replies").orderBy("timestamp");
+
+        FirestoreRecyclerOptions<ReplyModel> options = new FirestoreRecyclerOptions.Builder<ReplyModel>().setQuery(query, ReplyModel.class).build();
+
+        replyAdapter = new ReplyAdapter(options, ViewSpacePostActivity.this);
+
+        binding.spaceViewReplyList.setLayoutManager(new WrapContentLinearLayoutManager(ViewSpacePostActivity.this, LinearLayoutManager.VERTICAL,false));
+        binding.spaceViewReplyList.setAdapter(replyAdapter);
+
+        binding.spaceViewReplyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                String replyText = binding.spaceViewReplyText.getText().toString();
+
+                if(TextUtils.isEmpty(replyText)){
+
+                    Toast.makeText(ViewSpacePostActivity.this, "Please Enter Your Reply", Toast.LENGTH_SHORT).show();
+
+                } else {
+
+                    final Map<String, Object> reply = new HashMap<>();
+                    reply.put("by", uid);
+                    reply.put("timestamp", FieldValue.serverTimestamp());
+                    reply.put("reply", replyText);
+                    mFirestore.collection("Space").document(postId).collection("Replies").document().set(reply).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+
+                            if (!task.isSuccessful()) {
+
+                                Toast.makeText(ViewSpacePostActivity.this, "Failed to Send Reply", Toast.LENGTH_SHORT).show();
+
+                            } else {
+
+                                binding.spaceViewReplyText.setText("");
+
+                                InputMethodManager inputMethodManager = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                                inputMethodManager.hideSoftInputFromWindow(binding.spaceViewReplyButton.getApplicationWindowToken(),0);
+
+                            }
+                        }
+                    });
+                }
+
+            }
+        });
 
         if(current_uid.equals(uid)){
 
@@ -131,9 +196,7 @@ public class ViewSpacePostActivity extends AppCompatActivity {
 
                                     loadingDialog.startDialog();
 
-                                    FirebaseFirestore mPostFirestore = FirebaseFirestore.getInstance();
-
-                                    mPostFirestore.collection("Space").document(postId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                    mFirestore.collection("Space").document(postId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
 
@@ -175,7 +238,19 @@ public class ViewSpacePostActivity extends AppCompatActivity {
 
         }
 
+    }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        replyAdapter.startListening();
 
     }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        replyAdapter.stopListening();
+    }
+
 }
