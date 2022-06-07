@@ -22,9 +22,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FieldValue;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.project.daffaalmerf.uaspm.LoadingDialog;
 import com.project.daffaalmerf.uaspm.R;
 import com.project.daffaalmerf.uaspm.WrapContentLinearLayoutManager;
@@ -86,16 +89,6 @@ public class ViewSpacePostActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         String current_uid = mAuth.getCurrentUser().getUid();
-
-        Query query = mFirestore.collection("Space").document(postId).collection("Replies").orderBy("timestamp");
-
-        FirestoreRecyclerOptions<ReplyModel> options = new FirestoreRecyclerOptions.Builder<ReplyModel>().setQuery(query, ReplyModel.class).build();
-
-        replyAdapter = new ReplyAdapter(options, this);
-
-        binding.spaceViewReplyList.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
-        binding.spaceViewReplyList.setAdapter(replyAdapter);
-        replyAdapter.notifyDataSetChanged();
 
         binding.spaceViewReplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -197,6 +190,19 @@ public class ViewSpacePostActivity extends AppCompatActivity {
 
                                     loadingDialog.startDialog();
 
+                                    mFirestore.collection("Space").document(postId).collection("Replies").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
+                                            for(DocumentSnapshot snapshot : task.getResult()){
+
+                                                snapshot.getReference().delete();
+
+                                            }
+
+                                        }
+                                    });
+
                                     mFirestore.collection("Space").document(postId).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
@@ -238,6 +244,15 @@ public class ViewSpacePostActivity extends AppCompatActivity {
             });
 
         }
+
+        Query query = mFirestore.collection("Space").document(postId).collection("Replies").orderBy("timestamp");
+
+        FirestoreRecyclerOptions<ReplyModel> options = new FirestoreRecyclerOptions.Builder<ReplyModel>().setQuery(query, ReplyModel.class).build();
+
+        replyAdapter = new ReplyAdapter(options, this);
+
+        binding.spaceViewReplyList.setLayoutManager(new WrapContentLinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        binding.spaceViewReplyList.setAdapter(replyAdapter);
 
     }
 

@@ -4,14 +4,14 @@ import java.util.Date;
 
 public class SpacePostModel {
 
-    public SpacePostModel(){
-
-    }
-
     private String by;
     private Date timestamp;
     private String category;
     private String content;
+
+    public SpacePostModel(){
+
+    }
 
     public SpacePostModel(String by, Date timestamp, String category, String content){
 

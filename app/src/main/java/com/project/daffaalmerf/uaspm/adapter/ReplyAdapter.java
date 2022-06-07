@@ -38,8 +38,9 @@ public class ReplyAdapter extends FirestoreRecyclerAdapter<ReplyModel, ReplyAdap
     @Override
     protected void onBindViewHolder(@NonNull ReplyAdapter.ReplyHolder holder, int position, @NonNull ReplyModel model) {
 
-        DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
-        String creationDate = dateFormat.format(model.getTimestamp());
+//        DateFormat dateFormat = SimpleDateFormat.getDateInstance(DateFormat.MEDIUM, Locale.US);
+//        String replyCreationDate = dateFormat.format(model.getTimestamp());
+        String replyCreationDate = String.valueOf(model.getTimestamp());
         String uid = model.getBy();
         String reply = model.getReply();
 
@@ -62,7 +63,7 @@ public class ReplyAdapter extends FirestoreRecyclerAdapter<ReplyModel, ReplyAdap
         });
 
         holder.replyContent.setText(reply);
-        holder.replyDate.setText(creationDate);
+        holder.replyDate.setText(replyCreationDate);
 
     }
 

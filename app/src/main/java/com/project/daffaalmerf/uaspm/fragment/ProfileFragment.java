@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
 
         spacePostAdapter = new SpacePostAdapter(options, getContext());
 
-        binding.profilePostList.setLayoutManager(new WrapContentLinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false));
+        binding.profilePostList.setLayoutManager(new WrapContentLinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
         binding.profilePostList.setAdapter(spacePostAdapter);
 
         binding.profileLogout.setOnClickListener(new View.OnClickListener() {
