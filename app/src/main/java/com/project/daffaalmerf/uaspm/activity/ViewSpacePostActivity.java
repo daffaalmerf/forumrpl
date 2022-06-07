@@ -103,7 +103,7 @@ public class ViewSpacePostActivity extends AppCompatActivity {
                 } else {
 
                     final Map<String, Object> reply = new HashMap<>();
-                    reply.put("by", uid);
+                    reply.put("by", current_uid);
                     reply.put("timestamp", FieldValue.serverTimestamp());
                     reply.put("reply", replyText);
                     mFirestore.collection("Space").document(postId).collection("Replies").document().set(reply).addOnCompleteListener(new OnCompleteListener<Void>() {
