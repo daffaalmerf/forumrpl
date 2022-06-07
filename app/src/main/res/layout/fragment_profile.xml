@@ -7,44 +7,61 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="32dp"
-        android:background="?attr/colorPrimaryVariant"
-        >
+        android:layout_height="wrap_content">
 
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile_image"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="#C4C4C4"
-            android:layout_centerHorizontal="true">
-
-        </de.hdodenhof.circleimageview.CircleImageView>
-
-        <TextView
-            android:id="@+id/profile_username"
+        <RelativeLayout
+            android:id="@+id/profile_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profile_image"
-            android:layout_marginTop="16dp"
-            android:layout_centerHorizontal="true"
-            android:textAlignment="center"
-            android:text="Username"
-            android:textColor="@color/white">
+            android:padding="32dp"
+            android:background="?attr/colorPrimaryVariant">
 
-        </TextView>
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="#C4C4C4"
+                android:layout_centerHorizontal="true">
 
-        <TextView
-            android:id="@+id/profile_logout"
+            </de.hdodenhof.circleimageview.CircleImageView>
+
+            <TextView
+                android:id="@+id/profile_username"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_image"
+                android:layout_marginTop="16dp"
+                android:layout_centerHorizontal="true"
+                android:textAlignment="center"
+                android:text="Username"
+                android:textColor="@color/white">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/profile_logout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/profile_username"
+                android:layout_marginTop="16dp"
+                android:textAlignment="center"
+                android:text="Log Out"
+                android:textColor="#C4C4C4">
+
+            </TextView>
+
+        </RelativeLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/profile_post_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/profile_username"
             android:layout_marginTop="16dp"
-            android:textAlignment="center"
-            android:text="Log Out"
-            android:textColor="#C4C4C4">
+            android:layout_below="@id/profile_header">
 
-        </TextView>
+        </androidx.recyclerview.widget.RecyclerView>
+
+
 
     </RelativeLayout>
 

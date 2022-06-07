@@ -58,7 +58,7 @@ public class SpaceFragment extends Fragment {
             }
         });
 
-        Query query = mSpaceFirestore.collection("Space").orderBy("timestamp");
+        Query query = mSpaceFirestore.collection("Space").orderBy("timestamp", Query.Direction.DESCENDING);
 
         FirestoreRecyclerOptions<SpacePostModel> options = new FirestoreRecyclerOptions.Builder<SpacePostModel>().setQuery(query, SpacePostModel.class).build();
 

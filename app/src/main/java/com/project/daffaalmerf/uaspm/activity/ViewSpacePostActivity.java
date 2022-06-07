@@ -91,10 +91,11 @@ public class ViewSpacePostActivity extends AppCompatActivity {
 
         FirestoreRecyclerOptions<ReplyModel> options = new FirestoreRecyclerOptions.Builder<ReplyModel>().setQuery(query, ReplyModel.class).build();
 
-        replyAdapter = new ReplyAdapter(options, ViewSpacePostActivity.this);
+        replyAdapter = new ReplyAdapter(options, this);
 
-        binding.spaceViewReplyList.setLayoutManager(new WrapContentLinearLayoutManager(ViewSpacePostActivity.this, LinearLayoutManager.VERTICAL,false));
+        binding.spaceViewReplyList.setLayoutManager(new WrapContentLinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
         binding.spaceViewReplyList.setAdapter(replyAdapter);
+        replyAdapter.notifyDataSetChanged();
 
         binding.spaceViewReplyButton.setOnClickListener(new View.OnClickListener() {
             @Override
