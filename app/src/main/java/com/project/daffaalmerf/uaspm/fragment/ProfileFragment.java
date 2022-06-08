@@ -44,7 +44,6 @@ import com.project.daffaalmerf.uaspm.activity.LoginActivity;
 import com.project.daffaalmerf.uaspm.adapter.SpacePostAdapter;
 import com.project.daffaalmerf.uaspm.databinding.FragmentProfileBinding;
 import com.project.daffaalmerf.uaspm.model.SpacePostModel;
-import com.yalantis.ucrop.UCrop;
 
 import java.io.File;
 import java.io.IOException;

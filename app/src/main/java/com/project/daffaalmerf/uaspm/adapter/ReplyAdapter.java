@@ -142,6 +142,126 @@ public class ReplyAdapter extends FirestoreRecyclerAdapter<ReplyModel, ReplyAdap
             }
         });
 
+        holder.replyContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (current_uid.equals(uid)) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setCancelable(true);
+                    builder.setTitle("Delete Reply");
+                    builder.setMessage("Do you want to delete this reply?");
+                    builder.setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    loadingDialog = new LoadingDialog((Activity) context);
+
+                                    loadingDialog.startDialog();
+
+                                    mFirestore.collection("Space").document(post_id).collection("Replies").document(reply_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            if (task.isSuccessful()){
+
+                                                loadingDialog.dismissDialog();
+
+                                                Toast.makeText(context, "Reply Successfully Deleted", Toast.LENGTH_SHORT).show();
+
+                                            } else {
+
+                                                loadingDialog.dismissDialog();
+
+                                                Toast.makeText(context, "Reply Failed to Delete", Toast.LENGTH_SHORT).show();
+
+                                            }
+
+                                        }
+                                    });
+
+                                }
+                            });
+
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }
+
+            }
+        });
+
+        holder.replyDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                if (current_uid.equals(uid)) {
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setCancelable(true);
+                    builder.setTitle("Delete Reply");
+                    builder.setMessage("Do you want to delete this reply?");
+                    builder.setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    loadingDialog = new LoadingDialog((Activity) context);
+
+                                    loadingDialog.startDialog();
+
+                                    mFirestore.collection("Space").document(post_id).collection("Replies").document(reply_id).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+
+                                            if (task.isSuccessful()){
+
+                                                loadingDialog.dismissDialog();
+
+                                                Toast.makeText(context, "Reply Successfully Deleted", Toast.LENGTH_SHORT).show();
+
+                                            } else {
+
+                                                loadingDialog.dismissDialog();
+
+                                                Toast.makeText(context, "Reply Failed to Delete", Toast.LENGTH_SHORT).show();
+
+                                            }
+
+                                        }
+                                    });
+
+                                }
+                            });
+
+                    builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.dismiss();
+
+                        }
+                    });
+
+                    AlertDialog dialog = builder.create();
+                    dialog.show();
+
+                }
+
+            }
+        });
+
     }
 
     @NonNull
