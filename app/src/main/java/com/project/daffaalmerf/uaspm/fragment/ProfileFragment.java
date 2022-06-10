@@ -39,6 +39,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.project.daffaalmerf.uaspm.LoadingDialog;
 import com.project.daffaalmerf.uaspm.WrapContentLinearLayoutManager;
 import com.project.daffaalmerf.uaspm.activity.LoginActivity;
 import com.project.daffaalmerf.uaspm.adapter.SpacePostAdapter;
@@ -105,11 +106,35 @@ public class ProfileFragment extends Fragment {
         binding.profileLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(true);
+                builder.setTitle("Confirm Log Out");
+                builder.setMessage("Do you wish to log out from this account?");
+                builder.setPositiveButton("Yes",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
 
-                mAuth.signOut();
-                Intent logoutIntent = new Intent(getContext(), LoginActivity.class);
-                startActivity(logoutIntent);
-                getActivity().finish();
+                                mAuth.signOut();
+                                Intent logoutIntent = new Intent(getContext(), LoginActivity.class);
+                                startActivity(logoutIntent);
+                                getActivity().finish();
+
+
+                            }
+                        });
+
+                builder.setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        dialog.dismiss();
+
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
             }
         });
